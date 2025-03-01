@@ -6,15 +6,14 @@ The 3-qubit code I built earlier protects a qubit from bit-flip errors but doesn
 
 ## The Circuit
 
-The code identifies and corrects single-qubit errors—bit flips (\(X\)), phase flips (\(Z\)), or their combination (\(XZ\))—through a two-stage syndrome measurement process. For bit flips, it applies CNOT gates within each three-qubit block (e.g., qubits 0-2, 3-5, 6-8) to compare pairs, detecting if one qubit differs from the others; a Toffoli gate then corrects the identified qubit. For phase flips, Hadamard gates transform the blocks, and CNOT gates across the block leaders (qubits 0, 3, 6) check for phase mismatches, with a Toffoli gate restoring the correct phase. This dual mechanism ensures any single-qubit error is treated as a bit or phase flip and corrected without disrupting the logical state. After correction, decoding reverses the concatenation to retrieve the original qubit. View the implementation <a href="https://github.com/ojthomas7/shors-9-qubit-code" target="_blank">here</a>.
-
-The simplified circuit below shows an initial state setup and measurement:
+The code identifies and corrects single-qubit errors—bit flips (\(X\)), phase flips (\(Z\)), or their combination (\(XZ\)). For bit flips, it applies CNOT gates within each three-qubit block (e.g., qubits 0-2, 3-5, 6-8) to compare pairs, detecting if one qubit differs from the others; a Toffoli gate then corrects the identified qubit. For phase flips, Hadamard gates transform the qubits from the logical basis to the superposition basis, and CNOT gates across the block leaders (qubits 0, 3, 6) check for phase mismatches, with a Toffoli gate restoring the correct phase. This mechanism ensures any single-qubit error is treated as a bit or phase flip and corrected without disrupting the logical state. After correction, decoding reverses the concatenation to retrieve the original qubit.
+The circuit diagram built in Qiskit below shows an initial state setup and measurement:
 
 <p align="center">
-  <img src="shorcode_fixed.png" alt="Shor's Simplified Circuit" width="400"/>
+  <img src="shorcode.png"  width="400"/>
 </p>
 <p align="center">
-  <i>A simplified circuit applying an X gate to q[0] followed by measurement. The full Shor code includes encoding, error simulation, correction, and decoding stages.</i>
+  <i></i>
 </p>
 
 Below are histograms showing measurement outcomes for initial states \(|0\rangle\) and \(|1\rangle\) after the full error correction process:
