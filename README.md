@@ -16,7 +16,7 @@ The circuit diagram built in Qiskit below shows an initial state setup and measu
   <i></i>
 </p>
 
-Below are histograms showing measurement outcomes for initial states \(|0\rangle\) and \(|1\rangle\) after the full error correction process:
+Below are histograms showing measurement outcomes for initial states $\(|0\rangle\)$ and $\(|1\rangle\)$ after the full error correction process:
 
 <p align="center">
   <img src="histogram0.png" alt="Histogram for |0>" width="300" style="display:inline-block;"/>
