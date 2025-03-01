@@ -2,11 +2,11 @@
 
 ## Overview
 
-Shor’s 9-qubit code is a quantum error correction method that protects a single logical qubit using nine physical qubits. Developed by Peter Shor, it encodes the logical state—starting as \(|\psi\rangle = \alpha|0\rangle + \beta|1\rangle\)—into a nine-qubit configuration through a series of CNOT and Hadamard gates. This setup shields the qubit from noise by redundantly spreading the information, allowing detection and correction of errors that disrupt quantum systems.
+The 3-qubit code I built earlier protects a qubit from bit-flip errors but doesn’t address phase flips. Shor’s 9-qubit code is a quantum error correction method that uses nine physical qubits to safeguard one logical qubit against a wider range of errors. It encodes the logical qubit by first using a three-qubit code to detect and correct phase-flip errors, then encoding each of those three qubits with another three-qubit code to handle bit-flip errors. This layered approach, known as concatenation, combines both steps into a single nine-qubit structure, offering protection from any single-qubit error.
 
 ## The Solution
 
-Unlike simpler codes that handle only bit flips, Shor’s 9-qubit code detects and corrects both bit flips and phase flips within the same circuit. After encoding, the circuit introduces a bit flip (\(X\)) and phase flip (\(Z\)) on one qubit to simulate noise. Correction uses syndrome measurements—checking qubit pairs for bit errors and block relations for phase errors—to identify and fix these disruptions. Decoding then retrieves the original state, measured to verify correction.
+The code identifies and corrects single-qubit errors—bit flips (\(X\)), phase flips (\(Z\)), or their combination (\(XZ\))—through a two-stage syndrome measurement process. For bit flips, it applies CNOT gates within each three-qubit block (e.g., qubits 0-2, 3-5, 6-8) to compare pairs, detecting if one qubit differs from the others; a Toffoli gate then corrects the identified qubit. For phase flips, Hadamard gates transform the blocks, and CNOT gates across the block leaders (qubits 0, 3, 6) check for phase mismatches, with a Toffoli gate restoring the correct phase. This dual mechanism ensures any single-qubit error is treated as a bit or phase flip and corrected without disrupting the logical state. After correction, decoding reverses the concatenation to retrieve the original qubit. View the implementation <a href="https://github.com/ojthomas7/shors-9-qubit-code" target="_blank">here</a>.
 
 The simplified circuit below shows an initial state setup and measurement:
 
@@ -14,15 +14,15 @@ The simplified circuit below shows an initial state setup and measurement:
   <img src="shorcode_fixed.png" alt="Shor's Simplified Circuit" width="400"/>
 </p>
 <p align="center">
-  <i>A basic circuit applying an X gate to q[0] followed by measurement. The full Shor code includes encoding, error simulation, correction, and decoding stages.</i>
+  <i>A simplified circuit applying an X gate to q[0] followed by measurement. The full Shor code includes encoding, error simulation, correction, and decoding stages.</i>
 </p>
 
-Below are histograms showing results for initial states \(|0\rangle\) and \(|1\rangle\) after the full process:
+Below are histograms showing measurement outcomes for initial states \(|0\rangle\) and \(|1\rangle\) after the full error correction process:
 
 <p align="center">
   <img src="histogram0.png" alt="Histogram for |0>" width="300" style="display:inline-block;"/>
   <img src="histogram1.png" alt="Histogram for |1>" width="300" style="display:inline-block;"/>
 </p>
 <p align="center">
-  <i>Left: Results for initial state |0〉, yielding 1000 counts of '0'. Right: Results for initial state |1〉, yielding 1000 counts of '1'. These confirm the code’s error correction.</i>
+  <i>Left: Results for initial state |0〉, showing 1000 counts of '0'. Right: Results for initial state |1〉, showing 1000 counts of '1'. These demonstrate the code’s correction ability.</i>
 </p>
