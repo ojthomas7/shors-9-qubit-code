@@ -10,7 +10,7 @@ The code identifies and corrects single-qubit errors—bit flips (\(X\)), phase 
 The circuit diagram built in Qiskit below shows an initial state setup and measurement:
 
 <p align="center">
-  <img src="shorcode.png"  width="400"/>
+  <img src="shorcode.png"  width="700"/>
 </p>
 <p align="center">
   <i></i>
